@@ -3,7 +3,6 @@ package com.example.app0103;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +26,7 @@ public class CountryActivityView extends AppCompatActivity {
             TextView countryCapital = findViewById(R.id.countryViewCapital);
             TextView countryArea = findViewById(R.id.countryViewArea);
 
+            assert country != null;
             imageViewFlag.setImageResource(country.getFlagId());
             countryName.setText(getResources().getString(R.string.country) + country.getName());
             countryCapital.setText(getResources().getString(R.string.capital) + country.getCapital());

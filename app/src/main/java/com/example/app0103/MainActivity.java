@@ -4,12 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     String[] countryCapitals = {
             "Indianapolis", "Beijing", "Canberra", "Lisbon", "Washington, D.C.", "Wellington",
-            "Ottawa", "Brasília", "Tokyo", "Berlin", "London", "Paris",
+            "Ottawa", "Brasilia", "Tokyo", "Berlin", "London", "Paris",
             "Rome", "Moscow", "Seoul", "Madrid", "Mexico City", "Jakarta",
             "Amsterdam", "Bern", "Riyadh", "Stockholm", "Ankara"
     };

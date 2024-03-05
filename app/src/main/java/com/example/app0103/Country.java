@@ -1,10 +1,5 @@
 package com.example.app0103;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
 import java.io.Serializable;
 
 public class Country implements Serializable {
