@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CountriesFragment countriesFragment = new CountriesFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, countriesFragment).commit();
 //
 //        List<Country> countryList = new ArrayList<>();
 //        ListView listView = findViewById(R.id.countriesListView);
