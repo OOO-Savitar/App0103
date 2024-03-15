@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,10 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CountriesDetailsFragment extends Fragment {
+    private DetailsViewModel detailsViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        detailsViewModel = new ViewModelProvider(getActivity()).get(DetailsViewModel.class);
     }
 
     @Override
@@ -30,11 +34,8 @@ public class CountriesDetailsFragment extends Fragment {
             getParentFragmentManager().beginTransaction().replace(R.id.countryFragmentView, countriesFragment).commit();
         });
 
-        assert getArguments() != null;
-        Country country = (Country) getArguments().getSerializable("country");
+        detailsViewModel.getCountry().observe(getViewLifecycleOwner(), country -> setSelectedItem(view, country));
 
-        assert country != null;
-        setSelectedItem(view, country);
         return view;
     }
 
