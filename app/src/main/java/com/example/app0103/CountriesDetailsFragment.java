@@ -2,8 +2,11 @@ package com.example.app0103;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +24,19 @@ public class CountriesDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view1 = inflater.inflate(R.layout.fragment_countries_details, container, false);
-        view1.findViewById(R.id.imageButton).setOnClickListener(view -> getActivity().findViewById(R.id.countryDetailsFragmentView).setVisibility(View.GONE));
+        assert getArguments() != null;
+        Country country = (Country) getArguments().getSerializable("country");
+
+        assert country != null;
+        setSelectedItem(view1, country);
         return view1;
     }
 
-    public void setSelectedItem(Country country) {
-        ImageView imageViewFlag = getView().findViewById(R.id.countryViewFlag);
-        TextView countryName = getView().findViewById(R.id.countryViewName);
-        TextView countryCapital = getView().findViewById(R.id.countryViewCapital);
-        TextView countryArea = getView().findViewById(R.id.countryViewArea);
+    public void setSelectedItem(View view, Country country) {
+        ImageView imageViewFlag = view.findViewById(R.id.countryViewFlag);
+        TextView countryName = view.findViewById(R.id.countryViewName);
+        TextView countryCapital = view.findViewById(R.id.countryViewCapital);
+        TextView countryArea = view.findViewById(R.id.countryViewArea);
 
         assert country != null;
         imageViewFlag.setImageResource(country.getFlagId());

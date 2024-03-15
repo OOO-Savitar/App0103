@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 
@@ -22,6 +23,7 @@ public class CountriesFragment extends Fragment {
     interface OnFragmentSendDataListener {
         void onSendData(Country country);
     }
+
     private OnFragmentSendDataListener fragmentSendDataListener;
 
     @Override
@@ -74,9 +76,8 @@ public class CountriesFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         for (int i = 0; i < countryNames.length; i++) {
-            countryList.add(new Country(countryNames[i], countryImages[i], countryCapitals[i],  countryAreas[i]));
+            countryList.add(new Country(countryNames[i], countryImages[i], countryCapitals[i], countryAreas[i]));
         }
-
     }
 
     @Override
@@ -90,14 +91,21 @@ public class CountriesFragment extends Fragment {
         CustomCountryBaseAdapter customCountryBaseAdapter = new CustomCountryBaseAdapter(getContext(), countryList);
         countriesListView.setAdapter(customCountryBaseAdapter);
 
-        countriesListView.setOnItemClickListener((adapterView, view, i, l) -> {
-            FragmentContainerView fragmentContainerView = getActivity().findViewById(R.id.countryDetailsFragmentView);
-            fragmentContainerView.setVisibility(View.VISIBLE);
+        return country_view;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ListView countriesListView = view.findViewById(R.id.countries_list_view);
+
+        countriesListView.setOnItemClickListener((adapterView, view1, i, l) -> {
             Country country = countryList.get(i);
             fragmentSendDataListener.onSendData(country);
+            if (country != null) {
+                fragmentSendDataListener.onSendData(country);
+            }
+//            getParentFragmentManager().beginTransaction().replace(R.id.countryFragmentView, CountriesDetailsFragment.class, null).commit();
         });
-
-        return country_view;
     }
 }

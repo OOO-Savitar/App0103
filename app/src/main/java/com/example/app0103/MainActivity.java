@@ -14,10 +14,9 @@ public class MainActivity extends AppCompatActivity implements CountriesFragment
 
     @Override
     public void onSendData(Country country) {
-        CountriesDetailsFragment countriesDetailsFragment = (CountriesDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.countryDetailsFragmentView);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("country", country);
 
-        if (countriesDetailsFragment != null) {
-            countriesDetailsFragment.setSelectedItem(country);
-        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.countryFragmentView, CountriesDetailsFragment.class, bundle).addToBackStack(null).commit();
     }
 }
