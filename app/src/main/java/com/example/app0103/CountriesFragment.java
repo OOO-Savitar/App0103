@@ -21,7 +21,6 @@ import java.util.List;
 public class CountriesFragment extends Fragment {
     List<Country> countryList = new ArrayList<>();
 
-
     String[] countryNames = {
             "Indiana", "China", "Australia", "Portugal", "USA", "New Zealand",
             "Canada", "Brazil", "Japan", "Germany", "United Kingdom", "France",
@@ -54,7 +53,7 @@ public class CountriesFragment extends Fragment {
             R.drawable.sweden, R.drawable.turkey
     };
 
-//
+    //
     public static CountriesFragment newInstance(String param1, String param2) {
         CountriesFragment fragment = new CountriesFragment();
         Bundle args = new Bundle();
@@ -67,7 +66,7 @@ public class CountriesFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         for (int i = 0; i < countryNames.length; i++) {
-            countryList.add(new Country(countryNames[i], countryImages[i], countryCapitals[i],  countryAreas[i]));
+            countryList.add(new Country(countryNames[i], countryImages[i], countryCapitals[i], countryAreas[i]));
         }
     }
 
