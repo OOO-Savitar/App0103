@@ -23,13 +23,19 @@ public class CountriesDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view1 = inflater.inflate(R.layout.fragment_countries_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_countries_details, container, false);
+
+        view.findViewById(R.id.imageButtomBack).setOnClickListener(view1 -> {
+            CountriesFragment countriesFragment = new CountriesFragment();
+            getParentFragmentManager().beginTransaction().replace(R.id.countryFragmentView, countriesFragment).commit();
+        });
+
         assert getArguments() != null;
         Country country = (Country) getArguments().getSerializable("country");
 
         assert country != null;
-        setSelectedItem(view1, country);
-        return view1;
+        setSelectedItem(view, country);
+        return view;
     }
 
     public void setSelectedItem(View view, Country country) {
