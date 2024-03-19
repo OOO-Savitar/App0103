@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CountriesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CountriesFragment extends Fragment {
     List<Country> countryList = new ArrayList<>();
 
@@ -75,18 +71,17 @@ public class CountriesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view1 = inflater.inflate(R.layout.fragment_countries, container, false);
+        RecyclerView listView = (RecyclerView) view1.findViewById(R.id.countriesListView);
 
-        ListView listView = view1.findViewById(R.id.countriesListView);
-
-        CustomCountryBaseAdapter customCountryBaseAdapter = new CustomCountryBaseAdapter(getContext(), countryList);
-        listView.setAdapter(customCountryBaseAdapter);
-
-        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+        CustomCountryBaseAdapter.OnCountryClickListener countryClickListener = (country, position) -> {
             Intent intent = new Intent(getActivity(), CountryActivityView.class);
-            intent.putExtra(Country.class.getSimpleName(), countryList.get(i));
+            intent.putExtra(Country.class.getSimpleName(), countryList.get(position));
             startActivity(intent);
-        });
+        };
 
+        CustomCountryBaseAdapter customCountryBaseAdapter = new CustomCountryBaseAdapter(getActivity(), countryList, countryClickListener);
+
+        listView.setAdapter(customCountryBaseAdapter);
         return view1;
     }
 }
