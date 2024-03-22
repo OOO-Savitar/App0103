@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CountriesFragment extends Fragment {
     List<Country> countryList = new ArrayList<>();
+    CountryDatabase countryDatabase;
+    CountryDao countryDao;
 
     String[] countryNames = {
             "Indiana", "China", "Australia", "Portugal", "USA", "New Zealand",
@@ -39,14 +40,14 @@ public class CountriesFragment extends Fragment {
     };
 
 
-    int[] countryImages = {
-            R.drawable.india, R.drawable.china, R.drawable.australia,
-            R.drawable.portugal, R.drawable.united_states, R.drawable.new_zealand,
-            R.drawable.canada, R.drawable.brazil, R.drawable.japan, R.drawable.germany,
-            R.drawable.united_kingdom, R.drawable.france, R.drawable.italy, R.drawable.russia,
-            R.drawable.south_korea, R.drawable.spain, R.drawable.mexico, R.drawable.indonesia,
-            R.drawable.netherlands, R.drawable.switzerland, R.drawable.saudi_arabia,
-            R.drawable.sweden, R.drawable.turkey
+    String[] countryImagesCodes = {
+            "in", "cn", "au",
+            "pt", "us", "nz",
+            "ca", "br", "jp", "de",
+            "gb", "fr", "it", "ru",
+            "kr", "es", "mx", "id",
+            "nl", "ch", "sa",
+            "se", "tr"
     };
 
     //
@@ -61,8 +62,14 @@ public class CountriesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        for (int i = 0; i < countryNames.length; i++) {
-            countryList.add(new Country(countryNames[i], countryImages[i], countryCapitals[i], countryAreas[i]));
+        countryDatabase = App.getInstance().getCountryDatabase();
+        countryDao  = countryDatabase.countryDao();
+
+        if (!PreferenceUtils.isDatabaseInitialized(requireContext())) {
+            for (int i = 0; i < countryNames.length; i++) {
+                countryDao.insertCountry(new Country(countryNames[i], countryImagesCodes[i], countryCapitals[i], countryAreas[i]));
+            }
+            PreferenceUtils.setDatabaseInitialized(requireContext(), true);
         }
     }
 
@@ -79,9 +86,11 @@ public class CountriesFragment extends Fragment {
             startActivity(intent);
         };
 
-        CustomCountryBaseAdapter customCountryBaseAdapter = new CustomCountryBaseAdapter(getActivity(), countryList, countryClickListener);
+        countryList = countryDao.getAll();
 
+        CustomCountryBaseAdapter customCountryBaseAdapter = new CustomCountryBaseAdapter(getActivity(), countryList, countryClickListener);
         listView.setAdapter(customCountryBaseAdapter);
+
         return view1;
     }
 }

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 public class CountryActivityView extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
@@ -27,7 +29,8 @@ public class CountryActivityView extends AppCompatActivity {
             TextView countryArea = findViewById(R.id.countryViewArea);
 
             assert country != null;
-            imageViewFlag.setImageResource(country.getFlagId());
+            Glide.with(getApplicationContext()).load(getApplicationContext().getResources().getString(R.string.img_url)
+                    + country.getFlagImageCode() + ".png").into(imageViewFlag);
             countryName.setText(getResources().getString(R.string.country) + country.getName());
             countryCapital.setText(getResources().getString(R.string.capital) + country.getCapital());
             countryArea.setText(getResources().getString(R.string.area) + country.getArea() + " км²");

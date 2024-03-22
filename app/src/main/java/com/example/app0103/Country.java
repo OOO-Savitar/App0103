@@ -1,29 +1,39 @@
 package com.example.app0103;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
+@Entity
 public class Country implements Serializable {
+    @NotNull
+    @PrimaryKey
     private final String name;
 
-    private final int flagId;
+    private final String flagImageCode;
 
     private final String capital;
 
     private final double area;
 
-    public Country(String name, int flagId, String capital, double area) {
+    public Country(@NotNull String name, String flagImageCode, String capital, double area) {
         this.name = name;
-        this.flagId = flagId;
+        this.flagImageCode = flagImageCode;
         this.capital = capital;
         this.area = area;
     }
 
+    @NonNull
     public String getName() {
         return name;
     }
 
-    public int getFlagId() {
-        return flagId;
+    public String getFlagImageCode() {
+        return flagImageCode;
     }
 
     public String getCapital() {
